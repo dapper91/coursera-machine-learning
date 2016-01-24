@@ -3,11 +3,11 @@ from pandas import read_csv
 import numpy as np
 
 
-def get_data(df, features, output):
-    return df[features], df[[output]]
+DATA_PATH = '../../data/'
 
-def get_rss(model, X, y):
-    return np.sum((model.predict(X) - y) ** 2)
+
+def rss_scorer(estimator, X, y):
+    return np.sum((estimator.predict(X) - y) ** 2)
 
 def add_features(df):
     df['bedrooms_squared'] = df['bedrooms'] * df['bedrooms']
@@ -15,35 +15,40 @@ def add_features(df):
     df['lat_plus_long']    = df['lat'] + df['long']
     df['log_sqft_living']  = np.log(df['sqft_living'])
 
-def fit_and_print(df_train, df_test, features, output):    
-    X_train, y_train = get_data(df_train, features, output)
-    X_test, y_test = get_data(df_test, features, output)
+def fit_and_print(df_train, df_test, features, output):
+    X_train, y_train = df_train[features], df_train[output]
+    X_test, y_test = df_test[features], df_test[output]
 
     model = LinearRegression()
     model.fit(X_train, y_train)
 
-    print("coefficients: " + ', '.join([str(i) for i in model.coef_[0]]))
-    print("train rss:    %f" % get_rss(model, X_train, y_train))
-    print("test rss:     %f" % get_rss(model, X_test, y_test))
+    print("COEFFICIENTS:")
+    for feature, coef in zip(features, model.coef_):
+        print("%-20s%15e" % (feature, coef))
+
+    print("RSS:")
+    print("train    %e" % rss_scorer(model, X_train, y_train))
+    print("test     %e" % rss_scorer(model, X_test, y_test))
 
 
-df_train = read_csv('kc_house_train_data.csv')
+df_train = read_csv(DATA_PATH + 'kc_house_train_data.csv.gz', compression = "gzip")
 add_features(df_train)
 
-df_test  = read_csv('kc_house_test_data.csv')
+df_test  = read_csv(DATA_PATH + 'kc_house_test_data.csv.gz', compression = "gzip")
 add_features(df_test)
 
 
 print("---------- model 0 ----------")
 
 features, output = list(set(df_train.axes[1]) - set(['price'])), 'price'
-X_train, y_train = get_data(df_train, features, output)
-X_test, y_test = get_data(df_test, features, output)
 
-print("bedrooms_squared avg:    %.2f" % np.mean(X_test['bedrooms_squared']))
-print("bed_bath_rooms avg:      %.2f" % np.mean(X_test['bed_bath_rooms']))
-print("log_sqft_living avg:     %.2f" % np.mean(X_test['log_sqft_living']))
-print("lat_plus_long avg:       %.2f" % np.mean(X_test['lat_plus_long']))
+X_train, y_train = df_train[features], df_train[output]
+X_test, y_test   = df_test[features],  df_test[output]
+
+print("bedrooms_squared avg:    %10.2f" % np.mean(X_test['bedrooms_squared']))
+print("bed_bath_rooms avg:      %10.2f" % np.mean(X_test['bed_bath_rooms']))
+print("log_sqft_living avg:     %10.2f" % np.mean(X_test['log_sqft_living']))
+print("lat_plus_long avg:       %10.2f" % np.mean(X_test['lat_plus_long']))
 
 
 print("---------- model 1 ----------")

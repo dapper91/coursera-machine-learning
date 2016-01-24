@@ -4,6 +4,9 @@ from math import sqrt
 import numpy as np
 
 
+DATA_PATH = '../../data/'
+
+
 def get_numpy_data(df, features, output):
     df['constant'] = 1.0
     return df.as_matrix(['constant'] + features), df.as_matrix([output])[:, 0]
@@ -40,7 +43,10 @@ def fit_and_print(df_train, df_test, features, output, initial_weights, step_siz
     feature_matrix, output_vector = get_numpy_data(df_train, features, output)
     weights = regression_gradient_descent(feature_matrix, output_vector, initial_weights, step_size, tolerance)
 
-    print("weights: " + ', '.join(["%.1f" % i for i in weights]))
+    print("WEIGHTS:")
+    for feature, weight in zip(['constant'] + features, weights):
+        print("%-20s%15f" % (feature, weight))
+    print("")
 
     feature_matrix, output_vector = get_numpy_data(df_test, features, output)
     print("1st test house prediction: " + '%.0f' % predict_outcome(feature_matrix[0, :], weights))
@@ -49,8 +55,8 @@ def fit_and_print(df_train, df_test, features, output, initial_weights, step_siz
 
 
 
-df_train = read_csv('kc_house_train_data.csv')
-df_test  = read_csv('kc_house_test_data.csv')
+df_train = read_csv(DATA_PATH + 'kc_house_train_data.csv.gz', compression = "gzip")
+df_test  = read_csv(DATA_PATH + 'kc_house_test_data.csv.gz', compression = "gzip")
 
 
 print("1st test house true price: %.0f" % df_test['price'][0])
