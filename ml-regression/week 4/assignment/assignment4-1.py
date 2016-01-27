@@ -29,7 +29,7 @@ def rss_scorer(estimator, X, y):
 
 
 
-print("---------- Question 1 ----------")
+print("==================== Question 1 ====================")
 
 df = pd.read_csv(DATA_PATH + 'kc_house_data.csv.gz', compression = 'gzip', dtype = {'sqft_living': np.float64}).sort(['sqft_living','price'])
 
@@ -43,7 +43,7 @@ print("power_1 coef: %d" % model.coef_[0])
 
 
 
-print("---------- Question 2,3 ----------")
+print("=================== Question 2,3 ===================")
 
 l2_small_penalty = 1e-9
 
@@ -61,7 +61,7 @@ fit_and_print('wk3_kc_house_set_4_data.csv.gz', l2_small_penalty)
 
 
 
-print("---------- Question 4,5 ----------")
+print("=================== Question 4,5 ===================")
 
 l2_large_penalty = 1.23e2
 
@@ -79,7 +79,7 @@ fit_and_print('wk3_kc_house_set_4_data.csv.gz', l2_large_penalty)
 
 
 
-print("---------- Question 6 ----------")
+print("==================== Question 6 ====================")
 
 df = pd.read_csv(DATA_PATH + 'wk3_kc_house_train_valid_shuffled.csv.gz', compression = 'gzip', dtype = {'sqft_living': np.float64}).sort(['sqft_living','price'])
 
@@ -94,7 +94,7 @@ print("best alpha: %e" % best_alpha)
 
 
 
-print("---------- Question 7 ----------")
+print("==================== Question 7 ====================")
 
 df_train = pd.read_csv(DATA_PATH + 'wk3_kc_house_train_data.csv.gz', compression = 'gzip', dtype = {'sqft_living': np.float64}).sort(['sqft_living','price'])
 df_test  = pd.read_csv(DATA_PATH + 'wk3_kc_house_test_data.csv.gz',  compression = 'gzip', dtype = {'sqft_living': np.float64}).sort(['sqft_living','price'])

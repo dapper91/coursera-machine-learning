@@ -45,7 +45,8 @@ def fit_and_print(df_train, df_test, features, output, initial_weights, step_siz
 
     print("WEIGHTS:")
     for feature, weight in zip(['constant'] + features, weights):
-        print("%-20s%15f" % (feature, weight))
+        print("%-15s%10.1f" % (feature, weight))
+    
     print("")
 
     feature_matrix, output_vector = get_numpy_data(df_test, features, output)
@@ -62,7 +63,7 @@ df_test  = read_csv(DATA_PATH + 'kc_house_test_data.csv.gz', compression = "gzip
 print("1st test house true price: %.0f" % df_test['price'][0])
 
 
-print("---------- model 1 ----------")
+print("==================== Model 1 ====================")
 
 features, output = ['sqft_living'], 'price'
 initial_weights = np.array([-47000., 1.])
@@ -71,7 +72,7 @@ step_size, tolerance = 7e-12, 2.5e7
 fit_and_print(df_train, df_test, features, output, initial_weights, step_size, tolerance)
 
 
-print("---------- model 2 ----------")
+print("==================== Model 2 ====================")
 
 features, output = ['sqft_living', 'sqft_living15'], 'price'
 initial_weights = np.array([-100000., 1., 1.])

@@ -28,7 +28,7 @@ df_test  = pd.read_csv('home_data_test.csv.gz', compression = 'gzip')
 
 
 
-print("---------- Question 1 ----------")
+print("==================== Question 1 ====================")
 
 max_avg_zip = df.groupby(['zipcode']).mean()['price'].max()
 print("max average house price by zip: %d" % max_avg_zip)
@@ -36,7 +36,7 @@ print("max average house price by zip: %d" % max_avg_zip)
 
 
 
-print("---------- Question 2 ----------")
+print("==================== Question 2 ====================")
 
 filtered_num = df[(2000 < df['sqft_living']) & (df['sqft_living'] < 4000)].shape[0]
 total_num = df.shape[0]
@@ -45,7 +45,7 @@ print("fraction: %f" % (float(filtered_num) / total_num) )
 
 
 
-print("---------- Question 3 ----------")
+print("==================== Question 3 ====================")
 
 my_features, output = ['bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors', 'zipcode'], 'price'
 rmse1 = fit_and_score(df_train, df_test, my_features, output)

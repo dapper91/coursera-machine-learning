@@ -21,7 +21,7 @@ def fit_and_print(filename, label):
 
     print("COEFFICIENTS:")
     for degree, coef in enumerate(model.coef_):
-        print("power_%02d: %15e" % (degree, coef))
+        print("power_%02d: %15e" % (degree + 1, coef))
     print("")
 
     plt.plot(X['power_1'], model.predict(X),'-', label = label)
@@ -44,7 +44,7 @@ data_all = pandas.read_csv(DATA_PATH + 'kc_house_data.csv.gz', compression = "gz
 
 
 
-print("---------- Question 0 ----------")
+print("==================== Question 0 ====================")
 
 fit_and_plot(data_all, 'sqft_living', 'price', 1)
 fit_and_plot(data_all, 'sqft_living', 'price', 2)
@@ -59,7 +59,7 @@ plt.show()
 
 
 
-print("---------- Question 1,2 ----------")
+print("=================== Question 1,2 ===================")
 
 print("SET_1")
 fit_and_print('wk3_kc_house_set_1_data.csv.gz', 'set_1')
@@ -81,7 +81,7 @@ plt.show()
 
 
 
-print("---------- Question 3 ----------")
+print("==================== Question 3 ====================")
 
 data_train = pandas.read_csv(DATA_PATH + 'wk3_kc_house_train_data.csv.gz', compression = "gzip", dtype = {'sqft_living': np.float64})
 data_valid = pandas.read_csv(DATA_PATH + 'wk3_kc_house_valid_data.csv.gz', compression = "gzip", dtype = {'sqft_living': np.float64})
@@ -102,7 +102,7 @@ for degree in range(1, 16):
 
 
 
-print("---------- Question 4 ----------")
+print("==================== Question 4 ====================")
 
 X_train, y_train = polynomial_features(data_train.ix[:,'sqft_living'], 6), data_train['price']
 X_test, y_test = polynomial_features(data_test.ix[:,'sqft_living'], 6), data_test['price']

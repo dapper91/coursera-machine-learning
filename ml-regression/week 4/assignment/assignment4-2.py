@@ -60,7 +60,7 @@ df_test  = pd.read_csv(DATA_PATH + 'kc_house_test_data.csv.gz',  compression = '
 
 
 
-print("---------- Queston 1,2,3 ----------")
+print("================== Queston 1,2,3 ==================")
 
 features, output = ['sqft_living'], 'price'
 feature_matrix, output_vector = get_numpy_data(df_train, features, output)
@@ -72,21 +72,23 @@ max_iterations = 1000
 initial_weights = np.array([0., 0.])
 
 
-print("low penalty")
+print("LOW PENALTY")
 l2_penalty = 0.0
 weights_0_penalty = ridge_regression_gradient_descent(feature_matrix, output_vector, initial_weights, step_size, l2_penalty, None, max_iterations)
 print("weight1: %.1f" % weights_0_penalty[1])
 
 plt.plot(feature_matrix[:,1], predict_outcome(feature_matrix, weights_0_penalty),'b-', label = 'low l2')
 
+print("")
 
-print("high penalty")
+print("HIGH PENALTY")
 l2_penalty = 1e11
 weights_high_penalty = ridge_regression_gradient_descent(feature_matrix, output_vector, initial_weights, step_size, l2_penalty, None, max_iterations)
 print("weight1: %.1f" % weights_high_penalty[1])
 
 plt.plot(feature_matrix[:,1], predict_outcome(feature_matrix, weights_high_penalty),'r-', label = 'high l2')
 
+print("")
 
 plt.legend()
 plt.show()
@@ -94,7 +96,7 @@ plt.show()
 
 
 
-print("---------- Queston 4 ----------")
+print("==================== Queston 4 ====================")
 
 features, output = ['sqft_living'], 'price'
 feature_matrix, output_vector = get_numpy_data(df_test, features, output)
@@ -104,7 +106,7 @@ print("rss: %e" % rss_scorer(predict_outcome(feature_matrix, weights_0_penalty),
 
 
 
-print("---------- Queston 5 ----------")
+print("==================== Queston 5 ====================")
 
 features, output = ['sqft_living', 'sqft_living15'], 'price'
 feature_matrix_train, output_vector_train = get_numpy_data(df_train, features, output)
@@ -114,32 +116,32 @@ step_size = 1e-12
 max_iterations = 1000
 initial_weights = np.array([0., 0., 0.])
 
-print("low penalty")
+print("LOW PENALTY")
 l2_penalty = 0.0
 weights_0_penalty = ridge_regression_gradient_descent(feature_matrix_train, output_vector_train, initial_weights, step_size, l2_penalty, None, max_iterations)
-print("weight1: %.1f" % weights_0_penalty[1])
+print("weight_1: %.1f" % weights_0_penalty[1])
 
 
 
 
-print("---------- Queston 6 ----------")
+print("==================== Queston 6 ====================")
 
-print("high penalty")
+print("HIGH PENALTY")
 l2_penalty = 1e11
 weights_high_penalty = ridge_regression_gradient_descent(feature_matrix_train, output_vector_train, initial_weights, step_size, l2_penalty, None, max_iterations)
-print("weight1: %.1f" % weights_high_penalty[1])
+print("weight_1: %.1f" % weights_high_penalty[1])
 
 
 
 
-print("---------- Queston 7 ----------")
+print("==================== Queston 7 ====================")
 
 print("rss: %e" % rss_scorer(predict_outcome(feature_matrix_test, weights_high_penalty), output_vector_test))
 
 
 
 
-print("---------- Queston 8 ----------")
+print("==================== Queston 8 ====================")
 
 print("real price: %e" % df_test['price'][0])
 print("low penalty prediction:  %e" % predict_outcome(feature_matrix_test, weights_0_penalty)[0])

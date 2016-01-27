@@ -15,25 +15,29 @@ df_test  = read_csv(DATA_PATH + 'kc_house_test_data.csv.gz', compression = 'gzip
 
 
 
-print("---------- model 1 ----------")
+print("==================== Model 1 ====================")
 
 features, output = ['sqft_living'], 'price'
 
 X_train, y_train = df_train[features], df_train[output]
-X_test, y_test   = df_test[features],  df_test[output]
+X_test,  y_test  = df_test[features],  df_test[output]
 
 model1 = LinearRegression()
 model1.fit(X_train, y_train)
 
-print("coef:        %f" % model1.coef_)
-print("intercept:   %f" % model1.intercept_)
-print("prediction:  %f" % model1.predict(2650))
-print("train rss:   %e" % rss_scorer(model1, X_train, y_train))
-print("test rss:    %e" % rss_scorer(model1, X_test, y_test))
+print("coef:      %15.2f" % model1.coef_)
+print("intercept: %15.2f" % model1.intercept_)
+print("train rss: %15e" % rss_scorer(model1, X_train, y_train))
+print("test rss:  %15e" % rss_scorer(model1, X_test, y_test))
+
+print("")
+print("predictions:")
+print("2650 sq. feets apartment costs %.2f$" % model1.predict(2650))
+print("for 800000$ you can buy %.2f sq. feets apartment" % ((800000 - model1.intercept_)/model1.coef_))
 
 
 
-print("---------- model 2 ----------")
+print("==================== Model 2 ====================")
 
 features, output = ['bedrooms'], 'price'
 
@@ -43,4 +47,4 @@ X_test, y_test   = df_test[features],  df_test[output]
 model2 = LinearRegression()
 model2.fit(X_train, y_train)
 
-print("test rss:    %e" % rss_scorer(model2, X_test, y_test))
+print("test rss:   %15e" % rss_scorer(model2, X_test, y_test))

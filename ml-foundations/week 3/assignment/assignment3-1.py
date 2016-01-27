@@ -18,7 +18,7 @@ vectorizer = text.CountVectorizer(vocabulary = selected_words)
 
 
 
-print("---------- Queston 1,2 ----------")
+print("==================== Queston 1,2 ====================")
 
 doc_term_matrix_train = vectorizer.fit_transform(df_train['review']).toarray()
 sentiment_train = df_train['rating'] > 3
@@ -28,7 +28,7 @@ for feature, count in zip(vectorizer.get_feature_names(), np.sum(doc_term_matrix
 
 
 
-print("---------- Queston 3,4 ----------")
+print("==================== Queston 3,4 ====================")
 
 model = LogisticRegression()
 model.fit(doc_term_matrix_train, sentiment_train)
@@ -38,7 +38,7 @@ for feature, weight in zip(vectorizer.get_feature_names(), model.coef_[0]):
 
 
 
-print("---------- Queston 5,6 ----------")
+print("==================== Queston 5,6 ====================")
 
 doc_term_matrix_test = vectorizer.fit_transform(df_test['review']).toarray()
 sentiment_test = df_test['rating'] > 3
@@ -53,7 +53,7 @@ print(classification_report(sentiment_test, model.predict(doc_term_matrix_test))
 
 
 
-print("---------- Queston 10 ----------")
+print("==================== Queston 10 ====================")
 
 max_item_review = df_test[df_test['name'] == 'Baby Trend Diaper Champ'].max()
 x = vectorizer.fit_transform([max_item_review['review']]).toarray()

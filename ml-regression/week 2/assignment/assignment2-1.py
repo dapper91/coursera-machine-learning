@@ -26,6 +26,8 @@ def fit_and_print(df_train, df_test, features, output):
     for feature, coef in zip(features, model.coef_):
         print("%-20s%15e" % (feature, coef))
 
+    print("")
+
     print("RSS:")
     print("train    %e" % rss_scorer(model, X_train, y_train))
     print("test     %e" % rss_scorer(model, X_test, y_test))
@@ -38,7 +40,7 @@ df_test  = read_csv(DATA_PATH + 'kc_house_test_data.csv.gz', compression = "gzip
 add_features(df_test)
 
 
-print("---------- model 0 ----------")
+print("================== Question 1,2,3 ==================")
 
 features, output = list(set(df_train.axes[1]) - set(['price'])), 'price'
 
@@ -51,13 +53,13 @@ print("log_sqft_living avg:     %10.2f" % np.mean(X_test['log_sqft_living']))
 print("lat_plus_long avg:       %10.2f" % np.mean(X_test['lat_plus_long']))
 
 
-print("---------- model 1 ----------")
+print("==================== Question 5 ====================")
 fit_and_print(df_train, df_test, ['sqft_living', 'bedrooms', 'bathrooms', 'lat', 'long'], 'price')
 
 
-print("---------- model 2 ----------")
+print("==================== Question 6 ====================")
 fit_and_print(df_train, df_test, ['sqft_living', 'bedrooms', 'bathrooms', 'lat', 'long', 'bed_bath_rooms'], 'price')
 
 
-print("---------- model 3 ----------")
+print("=================== Question 7,8 ===================")
 fit_and_print(df_train, df_test, ['sqft_living', 'bedrooms', 'bathrooms', 'lat', 'long', 'bed_bath_rooms', 'bedrooms_squared', 'log_sqft_living', 'lat_plus_long'], 'price')
